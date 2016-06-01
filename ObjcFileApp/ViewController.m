@@ -80,8 +80,12 @@
     // ファイル名を決めるアラートを表示
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"保存します" message:@"ファイル名を指定してください" preferredStyle:UIAlertControllerStyleAlert];
     
-    // OK押下時の処理
-    UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    // UIAlertControllerにtextFieldを追加
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+    }];
+    
+    // アラートのOK押下時の処理
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // 入力したテキストをファイル名に指定
         NSString *fileName = [NSString stringWithFormat:@"%@.png", alert.textFields[0].text];
         
@@ -114,20 +118,15 @@
             
         }];
         
-    }];
+    }]];
     
-    // Cancel押下時の処理
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    // アラートのCancel押下時の処理
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"保存がキャンセルされました");
         self.label.text =@"保存がキャンセルされました";
         
-    }];
+    }]];
     
-    // UIAlertControllerにtextFieldを追加
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-    }];
-    [alert addAction:saveAction];
-    [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
     
 }
