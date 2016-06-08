@@ -254,5 +254,5 @@
 ## 参考
 * 同じ内容の【Swift】版もご用意しています
  * https://github.com/natsumo/SwiftFileApp
-* ニフティクラウドmobile backend の[ドキュメント（会員管理）](http://mb.cloud.nifty.com/doc/current/user/basic_usage_ios.html)をSwift版に書き換えたドキュメントをご用意していますので、ご活用ください
- * [準備中](http://qiita.com/natsumo)
+* ニフティクラウドmobile backend の[ドキュメント（ファイルストア）](http://mb.cloud.nifty.com/doc/current/user/basic_usage_ios.html)をSwift版に書き換えたドキュメントをご用意していますので、ご活用ください
+ * [Swiftでファイルをサーバーに保存しよう！](http://qiita.com/natsumo/items/974247b3b27ec0880dc6)
