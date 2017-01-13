@@ -37,16 +37,19 @@
 
 ![画像5](/readme-img/005.png)
 
-### 2. [GitHub](https://github.com/natsumo/ObjcFileApp.git)からサンプルプロジェクトのダウンロード
-
-* この画面([GitHub](https://github.com/natsumo/ObjcFileApp.git))の![画像10](/readme-img/010.png)ボタンをクリックし、さらに![画像11](/readme-img/011.PNG)ボタンをクリックしてサンプルプロジェクトをMacにダウンロードします
+#### 2. GitHubからサンプルプロジェクトのダウンロード
+* 下記リンクをクリックしてプロジェクトをダウンロードをMacにダウンロードします
+ * __[ObjcFileApp](https://github.com/natsumo/ObjcFileApp/archive/master.zip)__
 
 ### 3. Xcodeでアプリを起動
+* ダウンロードしたフォルダを開き、「ObjcFileApp.xcworkspace」をダブルクリックしてXcode開きます(白い方です)
 
-* ダウンロードしたフォルダを開き、![画像09](/readme-img/009.png)をダブルクリックしてXcode開きます　![画像08](/readme-img/008.png)
+![画像09](/readme-img/009.png)
 
 ![画像6](/readme-img/006.png)
 
+* 「ObjcFileApp.xcodeproj」（青い方）ではないので注意してください！
+![画像08](/readme-img/008.png)
 ### 4. APIキーの設定
 
 * `AppDelegate.m`を編集します
@@ -129,13 +132,13 @@
         cameraPiker.sourceType = sourceType;
         cameraPiker.delegate = self;
         [self presentViewController:cameraPiker animated:YES completion:nil];
-    
+
     } else {
         NSLog(@"エラーが発生しました");
         self.label.text = @"エラーが発生しました";
-        
+
     }
-    
+
 }
 
 // 撮影が終了したときに呼ばれる
@@ -144,10 +147,10 @@
     _cameraView.contentMode = UIViewContentModeScaleAspectFit;
     _cameraView.image = pickerImage;
     self.label.text = @"撮った写真をクラウドに保存しよう！";
-    
+
     // 閉じる処理
     [picker dismissViewControllerAnimated:YES completion:nil];
-    
+
 }
 
 // 撮影がキャンセルされた時に呼ばれる
@@ -164,68 +167,68 @@
     if (image == nil) {
         NSLog(@"画像がありません");
         self.label.text = @"画像がありません";
-        
+
         return;
-        
+
     }
-    
+
     // 画像をリサイズする
     CGFloat imageW = image.size.width*0.2;
     CGFloat imageH = image.size.height*0.2;
     UIImage *resizeImage = [self resize :image:imageW:imageH];
-    
+
     // ファイル名を決めるアラートを表示
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"保存します" message:@"ファイル名を指定してください" preferredStyle:UIAlertControllerStyleAlert];
-    
+
     // UIAlertControllerにtextFieldを追加
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
     }];
-    
+
     // アラートのOK押下時の処理
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // 入力したテキストをファイル名に指定
         NSString *fileName = [NSString stringWithFormat:@"%@.png", alert.textFields[0].text];
-        
+
         // 画像をNSDataに変換
         NSData *pngData = [[NSData alloc] initWithData:UIImagePNGRepresentation(resizeImage)];
         NCMBFile *file = [NCMBFile fileWithName:fileName data:pngData];
-        
+
         // ACLACL設定（読み書き可）
         NCMBACL *acl = [NCMBACL ACL];
         [acl setPublicReadAccess:YES];
         [acl setPublicWriteAccess:YES];
         [file setACL:acl];
-        
+
         // ファイルストアへ画像のアップロード
         [file saveInBackgroundWithBlock:^(NSError *error) {
             if (error != nil) {
                 // 保存失敗時の処理
                 NSLog(@"保存に失敗しました。エラーコード：%ld", error.code);
                 self.label.text =[NSString stringWithFormat:@"保存に失敗しました。エラーコード：%ld", error.code];
-                
+
             } else {
                 // 保存成功時の処理
                 NSLog(@"保存に成功しました");
                 self.label.text =@"保存に成功しました";
-                
+
             }
-            
+
         } progressBlock:^(int percentDone) {
             self.label.text = [NSString stringWithFormat:@"保存中：%d％", percentDone];
-            
+
         }];
-        
+
     }]];
-    
+
     // アラートのCancel押下時の処理
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"保存がキャンセルされました");
         self.label.text =@"保存がキャンセルされました";
-        
+
     }]];
-    
+
     [self presentViewController:alert animated:YES completion:nil];
-    
+
 }
 
 // 画像をリサイズする処理
@@ -235,9 +238,9 @@
     [image drawInRect:(CGRectMake(0, 0, size.width, size.height))];
     UIImage *resizeImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return resizeImage;
-    
+
 }
 
 - (void)didReceiveMemoryWarning {
