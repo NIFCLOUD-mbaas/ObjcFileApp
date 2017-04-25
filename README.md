@@ -98,14 +98,6 @@
  * 写真をクラウドに保存する処理は以下のように記述されます
 
 ```Objc
-//
-//  ViewController.m
-//  ObjcFileApp
-//
-//  Created by Natsumo Ikeda on 2016/05/31.
-//  Copyright © 2016年 NIFTY Corporation. All rights reserved.
-//
-
 #import "ViewController.h"
 
 @interface ViewController ()
